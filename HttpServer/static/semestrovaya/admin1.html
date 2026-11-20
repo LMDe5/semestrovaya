@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0c">
+  <meta name="description" content="Дашборд панели управления базы знаний «Тайный Грааль».">
+  <title>Дашборд — Панель управления</title>
+  <link rel="stylesheet" href="/semestrovaya/styles.css">
+  <style>
+    .dashboard-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 0 0 31px; }
+    .dashboard-heading .eyebrow { margin-bottom: 9px; }
+    .dashboard-heading h1 { margin: 0; color: var(--text); font-family: var(--serif); font-size: clamp(37px, 5vw, 54px); font-weight: 400; letter-spacing: -.035em; line-height: 1; }
+    .dashboard-heading__note { max-width: 220px; margin: 0 0 3px; color: #817d74; font-size: 11px; line-height: 1.65; text-align: right; }
+    .dashboard-section-title { margin: 0 0 14px; color: #d9d1c3; font-family: var(--serif); font-size: 20px; font-weight: 400; }
+
+
+    .quick-actions { max-width: 760px; margin-top: 40px; }
+    .quick-actions__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .quick-action { min-height: 106px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 19px 20px; border: 1px solid rgba(201, 167, 109, .19); color: var(--text); background: linear-gradient(135deg, rgba(22, 22, 28, .95), rgba(13, 13, 17, .9)); transition: border-color .2s ease, transform .2s ease, background .2s ease; }
+    .quick-action:hover { transform: translateY(-2px); border-color: rgba(201, 167, 109, .46); background: linear-gradient(135deg, rgba(33, 30, 26, .95), rgba(13, 13, 17, .9)); }
+    .quick-action__copy { display: grid; gap: 5px; }
+    .quick-action__copy strong { color: #e6dcc8; font-family: var(--serif); font-size: 17px; font-weight: 400; }
+    .quick-action__copy small { color: #88847b; font-size: 10px; line-height: 1.6; }
+    .quick-action__icon { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(201, 167, 109, .34); color: var(--gold-light); font-size: 17px; }
+
+    @media (max-width: 640px) {
+      .dashboard-heading { align-items: start; flex-direction: column; }
+      .dashboard-heading__note { max-width: 100%; text-align: left; }
+      .quick-actions__list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a class="brand" href="/admin" aria-label="Тайный Грааль — панель управления">
+        <span class="brand__seal">✦</span>
+        <span class="brand__text"><strong>Тайный Грааль</strong><small>ПАНЕЛЬ УПРАВЛЕНИЯ</small></span>
+      </a>
+      <p class="admin-sidebar__label">Управление</p>
+      <nav class="admin-nav" aria-label="Разделы панели управления">
+        <a class="admin-nav__link is-active" href="/admin" aria-current="page"><span class="admin-nav__icon" aria-hidden="true">⌂</span><span>Дашборд</span></a>
+        <a class="admin-nav__link" href="/admin/cards"><span class="admin-nav__icon" aria-hidden="true">✧</span><span>Карточки</span></a>
+      </nav>
+      <div class="admin-sidebar__grow"></div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-breadcrumb">Панель управления <span>/</span> Дашборд</div>
+      <header class="dashboard-heading">
+        <div>
+          <p class="eyebrow">АРХИВ И КОЛЛЕКЦИЯ</p>
+          <h1>Дашборд</h1>
+        </div>
+        <p class="dashboard-heading__note">Краткий обзор базы знаний «Тайный Грааль».</p>
+      </header>
+
+      <section class="quick-actions" aria-labelledby="actions-title">
+        <h2 class="dashboard-section-title" id="actions-title">Быстрые действия</h2>
+        <div class="quick-actions__list">
+          <a class="quick-action" href="/admin/edit">
+            <span class="quick-action__copy"><strong>Добавить карточку</strong><small>Создать запись в базе знаний</small></span>
+            <span class="quick-action__icon" aria-hidden="true">＋</span>
+          </a>
+          <a class="quick-action" href="/admin/cards">
+            <span class="quick-action__copy"><strong>Открыть каталог</strong><small>Просмотреть и изменить карточки</small></span>
+            <span class="quick-action__icon" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5d8a5930ca18eb9',t:'MTc5NTE5MDIwOA=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5d8a5930ca18eb9',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
