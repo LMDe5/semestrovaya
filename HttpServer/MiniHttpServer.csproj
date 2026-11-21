@@ -39,18 +39,6 @@
     <Content Update="static\semestrovaya\images\default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="static\Login_Form\forget.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="static\Login_Form\login.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="static\Login_Form\register.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="static\Login_Form\style.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="static\semestrovaya\404.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
