@@ -19,21 +19,32 @@ namespace MiniHttpServer.Controllers
         }
 
         [Get("filter")]
-        public IHttpResponseTypeResult Filter(int alignmentId)
+        public IHttpResponseTypeResult Filter(string alignmentId)
         {
-            return ShowCards(alignmentId);
+            if (!int.TryParse(alignmentId, out int id) || id < 0)
+            {
+                return new JsonResult(new { Message = "Некоректноая принадлежность" }, 400);
+            }
+
+            return ShowCards(id);
         }
 
         [Get("view")]
-        public IHttpResponseTypeResult GetCardById(int id)
+        public IHttpResponseTypeResult GetCardById(string id)
         {
+            if (!int.TryParse(id, out int cardId) || cardId <= 0)
+            {
+                Context.Response.StatusCode = 400;
+                return Html("<h1>400 — Некорректный ID карточки</h1><a href=\"/cards\">Вернуться в каталог</a>");
+            }
+
             var res = ormContext.GetAllAsync<Card>("cards").GetAwaiter().GetResult();
-            var card = res.FirstOrDefault(c => c.Id == id);
+            var card = res.FirstOrDefault(c => c.Id == cardId);
 
             if (card == null)
             {
-                string notFoundStr = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "static", "404.html"));
-                return Html(notFoundStr);
+                Context.Response.StatusCode = 404;
+                return Html("semestrovaya/404.html", new { });
             }
 
             var model = new

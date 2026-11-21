@@ -32,7 +32,10 @@
       box-shadow: 0 0 17px rgba(201, 167, 109, .15);
     }
     .filter-error { color: #e29296; font-size: 13px; }
-    .cards-empty { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+    .cards-empty { color: var(--muted); font-size: 14px; }
+    .catalog-search { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .catalog-search label { flex-basis: 100%; color: var(--muted); font-size: 12px; }
+    .catalog-search input { width: min(100%, 320px); min-height: 36px; padding: 0 12px; border: 1px solid rgba(201, 167, 109, .33); color: var(--text); background: #101015; font: inherit; }
     .cards-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 19px; padding-bottom: 72px; }
     .card {
       min-width: 0;
@@ -95,15 +98,20 @@
     </section>
 
     <section aria-label="Каталог карточек">
+      <form class="catalog-search" id="catalog-search">
+        <label for="card-search">Поиск по названию</label>
+        <input type="search" id="card-search" maxlength="100">
+        <button class="filter-button" type="submit">Найти</button>
+      </form>
       <div class="catalog-filters" role="group" aria-label="Фильтр по принадлежности">
-        <button class="filter-button" type="button" data-alignment-id=0 aria-pressed="true">Все</button>
+        <button class="filter-button" type="button" data-alignment-id="0" aria-pressed="true">Все</button>
 $foreach(var filter in AlignmentFilters)
         <button class="filter-button" type="button" data-alignment-id="${Id}" aria-pressed="false">${Name}</button>
 $endfor
       </div>
       <p id="filter-error" class="filter-error" role="alert" hidden></p>
+      <p id="cards-empty" class="cards-empty" role="status" hidden>Карточки не найдены.</p>
       <div class="cards-grid" id="cards-grid">
-
 $foreach(var card in Cards)
         <a href="/cards/view?id=${CardId}" class="card">
           <div class="card__image-wrap">
@@ -137,18 +145,33 @@ $endfor
   </footer>
 
   <script>
-    const filterButtons = document.querySelectorAll('.filter-button');
+    const searchForm = document.getElementById('catalog-search');
+    const searchInput = document.getElementById('card-search');
+    const filterButtons = document.querySelectorAll('[data-alignment-id]');
     const cardsGrid = document.getElementById('cards-grid');
     const filterError = document.getElementById('filter-error');
+    const emptyMessage = document.getElementById('cards-empty');
     let lastRequest = 0;
 
-    function selectFilter(id) {
-      filterButtons.forEach(button => {
-        button.setAttribute('aria-pressed', String(button.dataset.alignmentId === id));
+    function searchCards() {
+      const text = searchInput.value.trim().toLocaleLowerCase('ru');
+      let found = false;
+
+      cardsGrid.querySelectorAll('.card').forEach(card => {
+        const name = card.querySelector('.card__title').textContent.toLocaleLowerCase('ru');
+        card.hidden = !name.includes(text);
+        if (!card.hidden) found = true;
       });
+
+      emptyMessage.hidden = found;
     }
 
-    selectFilter(cardsGrid.dataset.alignmentId);
+    searchInput.addEventListener('input', searchCards);
+
+    searchForm.addEventListener('submit', event => {
+      event.preventDefault();
+      searchCards();
+    });
 
     filterButtons.forEach(button => {
       button.addEventListener('click', async () => {
@@ -167,7 +190,10 @@ $endfor
           if (!newGrid) throw new Error('Сервер не вернул список карточек.');
 
           cardsGrid.replaceChildren(...newGrid.childNodes);
-          selectFilter(button.dataset.alignmentId);
+          searchCards();
+          filterButtons.forEach(item => {
+            item.setAttribute('aria-pressed', String(item === button));
+          });
         } catch (error) {
           if (requestNumber !== lastRequest) return;
           filterError.textContent = 'Не удалось загрузить карточки: ' + error.message;
@@ -176,5 +202,5 @@ $endfor
       });
     });
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5d7c1be1f2455ba',t:'MTc5NTE4MDg3Ng=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5d7c1be1f2455ba',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5df29f98979f10d',t:'MTc5NTI1ODU0Ng=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5df29f98979f10d',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

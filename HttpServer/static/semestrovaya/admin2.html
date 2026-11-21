@@ -123,7 +123,6 @@ $endfor
   </div>
 
   <script>
-    // Поиск по названиям карточек
     const searchInput = document.querySelector('.search-field input');
     const rows = document.querySelectorAll('.cards-table tbody tr');
 
@@ -136,7 +135,6 @@ $endfor
       });
     });
 
-    // Удаление карточки через AJAX без перезагрузки страницы
     document.querySelectorAll('.icon-button--delete').forEach(function (button) {
       button.addEventListener('click', async function (event) {
         const row = event.currentTarget.closest('tr');
