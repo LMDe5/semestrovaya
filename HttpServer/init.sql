@@ -49,7 +49,7 @@ INSERT INTO cardalignments (name, description) VALUES
     ('Нейтрал', 'Карточка не относится ни к добру, ни ко злу.');
 
 INSERT INTO users (login, password, role)
-VALUES ('admin2000', 'admin0002', 'Admin');
+VALUES ('admin2000', 'pbkdf2$100000$j0Qi02qKk6oVLDPn0zCk4w==$eH5J90/+JS8n07QtYG3mKfviwdlRMETDPHi9NRs5IDI=', 'Admin');
 
 INSERT INTO cards (name, type, alignment, ability, description, imageurl,
                    cardtypeid, cardalignmentid)

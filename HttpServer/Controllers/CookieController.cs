@@ -1,9 +1,7 @@
 ﻿using HttpServer.Controllers;
 using HttpServer.Framework.Attributes;
 using HttpServer.Framework.HttpResponses;
-using ServiceStack.Web;
 using System.Net;
-using System.Text.Json;
 
 namespace MiniHttpServer.Controllers
 {
